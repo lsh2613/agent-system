@@ -71,15 +71,18 @@ git branch --show-current
 - `refactor` — 동작 변화 없는 내부 구조 변경
 - `perf` — 성능 개선
 - `chore` — 빌드/설정/버전업 등 주변부
-- `docs` — 문서만, ai에게 제공될 문서라고 하더라도 agent가 아닌 docs를 활용한다.
-- `agent` — `.claude/` 하위 파일의 생성/수정/삭제. **scope**는 관련된 기능의 이름으로 skill, sub-agent, hook, mcp 등이 존재. 전체 예시 `agent(skill): 커밋 스킬 추가`, `agent(mcp): nanobanan mcp 추가`
+- `docs` — 문서만
+- `skill` — `.codex/skills/` 하위 Codex skill 파일의 생성/수정/삭제. scope는 **skill 이름**. 예: `skill(commit): 신규 생성`, `skill(ui-design-system): 색상 토큰 섹션 보강`
 
 **scope** (관찰된 것 우선, 변경 위치에 맞게)
 
-- 프로젝트에서 사용하고 있는 데이터 도메인 이름으로 지정
+- `dashboard` — `packages/dashboard/`
+- `web` — `packages/web/`
+- `cli` — `packages/cli/`
+- `turbo` — 모노레포 루트 빌드/설정
 - 그 외 필요시 패키지/영역 이름으로 추가
-- 여러 scope에 걸치면 공백 없이 ','로 분리하거나 또는 scope 생략
-
+- 여러 scope에 걸치면 `(web,dashboard)` 또는 scope 생략
+- `skill` type의 scope는 항상 대상 skill 또는 sub-agent의 이름 (예: `commit`, `plan-and-build`, `ui-design-system`)
 
 **요약 규칙**
 
@@ -98,7 +101,7 @@ git branch --show-current
 모든 commit 메시지 끝에 빈 줄 두고 아래 trailer를 추가한다:
 
 ```
-Co-Authored-By: Claude <noreply@anthropic.com>
+Co-Authored-By: Codex <noreply@openai.com>
 ```
 
 ### 1-5. stage & commit
@@ -118,7 +121,7 @@ git commit -m "$(cat <<'EOF'
 
 <본문>
 
-Co-Authored-By: Claude <noreply@anthropic.com>
+Co-Authored-By: Codex <noreply@openai.com>
 EOF
 )"
 ```
